@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>假如你是Gay —— 性格测试</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 24px;
+  padding: 40px 32px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* ---- Welcome ---- */
+.welcome { text-align: center; }
+.welcome .icon { font-size: 64px; margin-bottom: 16px; }
+.welcome h1 { font-size: 28px; color: #333; margin-bottom: 8px; }
+.welcome .sub { color: #888; font-size: 14px; margin-bottom: 32px; }
+.welcome .disclaimer {
+  background: #fff3cd;
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #856404;
+  font-size: 13px;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 48px;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.btn:active { transform: translateY(0); }
+.btn-primary {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+}
+.btn-restart {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: #fff;
+  padding: 12px 36px;
+  font-size: 15px;
+}
+
+/* ---- Progress ---- */
+.progress-bar {
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #667eea, #f093fb);
+  transition: width 0.4s ease;
+}
+
+/* ---- Question ---- */
+.question-num {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.question-text {
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.options { display: flex; flex-direction: column; gap: 12px; }
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border: 2px solid #e8e8e8;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #fff;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+.option:focus-visible { border-color: #764ba2; box-shadow: 0 0 0 3px rgba(118,75,162,0.2); }
+.option:hover { border-color: #764ba2; background: #faf5ff; }
+.option.selected { border-color: #764ba2; background: #f3e8ff; }
+.option .letter {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 15px; color: #666;
+  flex-shrink: 0;
+}
+.option.selected .letter { background: #764ba2; color: #fff; }
+.option .text { font-size: 15px; color: #444; }
+
+.btn-next {
+  margin-top: 28px;
+  width: 100%;
+}
+.btn-next:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---- Result ---- */
+.result { text-align: center; }
+.result .type-icon { font-size: 80px; margin-bottom: 12px; }
+.result .type-name {
+  font-size: 32px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea, #f093fb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
+}
+.result .type-tagline { color: #999; font-size: 14px; margin-bottom: 24px; }
+
+.result-card {
+  background: #faf5ff;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: left;
+  margin-bottom: 16px;
+}
+.result-card h3 {
+  font-size: 16px;
+  color: #764ba2;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.result-card p { font-size: 14px; color: #555; line-height: 1.7; }
+
+.traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.trait {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.trait-pro { background: #d4edda; color: #155724; }
+.trait-con { background: #f8d7da; color: #721c24; }
+
+.match-list {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.match-tag {
+  padding: 8px 16px;
+  background: #fff;
+  border: 1px solid #e0d0f0;
+  border-radius: 50px;
+  font-size: 13px;
+  color: #764ba2;
+}
+
+.result .btn-restart { margin-top: 24px; }
+
+/* ---- Hidden ---- */
+.hidden { display: none !important; }
+
+/* ---- Fade in ---- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeIn 0.4s ease; }
+
+@media (max-width: 480px) {
+  .container { padding: 28px 20px; }
+  .welcome h1 { font-size: 24px; }
+  .question-text { font-size: 18px; }
+  .result .type-name { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <!-- Welcome -->
+  <section class="welcome fade-in" id="welcome">
+    <div class="icon">🌈</div>
+    <h1>假如你是Gay</h1>
+    <p class="sub">10道题 · 8种类型 · 纯属娱乐</p>
+    <div class="disclaimer">
+      ⚠️ 本测试仅供娱乐，不构成任何专业心理评估。<br>
+      所有题目和结果均为虚构，请勿当真。
+    </div>
+    <button class="btn btn-primary" onclick="startTest()">开始测试</button>
+  </section>
+
+  <!-- Question -->
+  <section class="hidden" id="question-screen">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-num" id="question-num"></div>
+    <div class="question-text fade-in" id="question-text"></div>
+    <div class="options fade-in" id="options"></div>
+    <button class="btn btn-primary btn-next" id="btn-next" disabled onclick="nextQuestion()">下一题</button>
+  </section>
+
+  <!-- Result -->
+  <section class="hidden result fade-in" id="result-screen"></section>
+</div>
+
+<script>
+// ==================== DATA ====================
+
+const TYPE_DATA = {
+  queen: {
+    id: 'queen',
+    name: '傲娇女王型',
+    icon: '👑',
+    tagline: '嘴上说不要，身体很诚实',
+    traits: { pro: ['自信闪耀','审美在线','气场强大','护短第一名'], con: ['口是心非','偶尔作精','死要面子','容易炸毛'] },
+    desc: '你是人群中最耀眼的存在，走路带风，眼神带电。表面上高冷难接近，实际上内心柔软得一塌糊涂。你享受被追捧的感觉，但只会对真正走进你心里的人展露温柔。朋友眼里你是"刀子嘴豆腐心"的代表人物。',
+    love: '在感情中你是主导方，喜欢被对方捧在手心。虽然嘴上嫌弃，但暗地里把对方的喜好记得清清楚楚。你需要的不是一个比你更强势的人，而是那个看穿你傲娇外表下温柔本质的人。',
+    match: ['阳光奶狗型 —— 他能融化你的傲娇外壳','居家暖男型 —— 他的包容让你有安全感','霸道总裁型 —— 棋逢对手的相爱相杀']
+  },
+  puppy: {
+    id: 'puppy',
+    name: '阳光奶狗型',
+    icon: '🐶',
+    tagline: '用笑容照亮全世界的小太阳',
+    traits: { pro: ['元气满满','真诚直率','治愈系','永远乐观'], con: ['过于黏人','容易受伤','缺乏主见','偶尔烦人'] },
+    desc: '你是朋友圈里的开心果，笑容就是你的超能力。对谁都是一片赤诚，相信世界上好人比坏人多。你毫不吝啬表达爱意，喜欢就是喜欢，想念就要说出来。和你在一起永远不会冷场。',
+    love: '你在感情中是付出型人格，会把最好的都给对方。有时候过于热情反而让对方有压力。你最适配的是懂得珍惜你这份纯粹的人，而不是觉得你"太黏人"的人。记住，你的真心值得被好好对待。',
+    match: ['傲娇女王型 —— 你的热情刚好融化他的傲娇','居家暖男型 —— 两个温柔的人双向奔赴','文艺青年型 —— 浪漫和热忱的碰撞']
+  },
+  prince: {
+    id: 'prince',
+    name: '高冷男神型',
+    icon: '🗿',
+    tagline: '生人勿近，熟人发疯',
+    traits: { pro: ['冷静理智','品味一流','边界感强','内心丰富'], con: ['社交懒惰','距离感强','不善表达','被误解为冷漠'] },
+    desc: '你不笑的时候看起来很凶，笑起来又判若两人。你享受独处的时光，但并不代表你不懂社交——你只是懒得应付无意义的寒暄。你的朋友圈很小，但每一个都是经过时间考验的真朋友。',
+    love: '你在感情中慢热但长情。不会一见钟情，但一旦认定就会默默守护很久。你的温柔不挂在嘴上，而是藏在细节里：记得对方爱吃的菜、不打扰对方的忙碌。你需要的是一个能读懂你沉默的人。',
+    match: ['文艺青年型 —— 两个内向灵魂的深度共鸣','沙雕欢乐型 —— 他的搞笑打破你的高冷封印','霸道总裁型 —— 互相欣赏的强者组合']
+  },
+  artsy: {
+    id: 'artsy',
+    name: '文艺青年型',
+    icon: '🎨',
+    tagline: '在落日和晚风中寻找诗意',
+    traits: { pro: ['情感细腻','审美独特','浪漫至极','有思想深度'], con: ['过度敏感','情绪波动','不切实际','偶尔矫情'] },
+    desc: '你有一双发现美的眼睛，能在别人忽视的角落里看到风景。你喜欢小众的事物，对音乐、电影、文学有自己的品味体系。朋友觉得你"活在自己的世界里"，但那个世界绚烂得让人想一探究竟。',
+    love: '你对爱情有浪漫的想象，渴望灵魂层面的契合。柴米油盐会让你窒息，你需要的是愿意陪你一起"疯"的人——深夜开车去看海、雨天窝在家里看电影。你的浪漫需要被懂的人接住。',
+    match: ['高冷男神型 —— 安静世界里的默契恋人','沙雕欢乐型 —— 他带给你人间烟火气','阳光奶狗型 —— 他的纯粹治愈你的敏感']
+  },
+  sassy: {
+    id: 'sassy',
+    name: '毒舌妖精型',
+    icon: '💅',
+    tagline: '我的嘴有毒，但我的心很软',
+    traits: { pro: ['幽默犀利','仗义执言','头脑灵活','品味出众'], con: ['说话太损','容易得罪人','得理不饶人','偶尔刻薄'] },
+    desc: '你的嘴比脑子快，吐槽功力一流。朋友聚会没有你就不热闹，但得罪人也是分分钟的事。其实你只是懒得伪装，觉得真实最可贵。被你怼过的人后来都发现，你只是嘴毒心软的代表。',
+    love: '你在感情中嘴硬心软到了极致。一边嫌弃对方"你怎么这么笨"，一边默默帮对方把所有事情都安排好。你需要的是一个不会被你的毒舌吓跑、反而觉得你很可爱的人。',
+    match: ['沙雕欢乐型 —— 两个段子手的快乐日常','霸道总裁型 —— 你来毒舌他来治','傲娇女王型 —— 互相嫌弃但离不开彼此']
+  },
+  homey: {
+    id: 'homey',
+    name: '居家暖男型',
+    icon: '🍳',
+    tagline: '最温柔的港湾，最踏实的陪伴',
+    traits: { pro: ['温柔体贴','情绪稳定','厨艺了得','可靠踏实'], con: ['缺乏激情','不善浪漫','过于老实','偶尔无聊'] },
+    desc: '你是所有人失恋后第一个想打电话的人。你不会说太多漂亮话，但会用行动告诉你"我在"。朋友搬家你第一个到，朋友难过你默默递上热汤。你的温柔像白开水，不惊艳但离不开。',
+    love: '你在感情中是细水长流型。不懂什么轰轰烈烈的表白，但你记得对方的生理期、会提前准备好红糖水。你最适配的是懂你这份踏实有多珍贵的人，而不是觉得你"不够浪漫"的人。',
+    match: ['傲娇女王型 —— 你的包容刚好接住他的小脾气','阳光奶狗型 —— 两个温柔的人互相取暖','文艺青年型 —— 你给他安全感，他给你惊喜']
+  },
+  boss: {
+    id: 'boss',
+    name: '霸道总裁型',
+    icon: '🦁',
+    tagline: '我的规矩就是规矩',
+    traits: { pro: ['目标明确','保护欲强','果断利落','责任感强'], con: ['控制欲强','不太浪漫','不擅表达脆弱','偶尔强势过头'] },
+    desc: '你天生就是拿主意的人。不管是聚餐选餐厅还是人生重大决定，你都有自己的判断，并且通常是对的。你不喜欢拖泥带水，做事雷厉风行。表面看起来无坚不摧，其实肩膀上的压力只有自己知道。',
+    love: '你在感情中习惯掌控节奏，会用行动而不是语言来表达爱。你不会天天说"我爱你"，但会在对方遇到困难时第一个站出来。你需要的是一个能让你卸下盔甲、展露柔软一面的人。',
+    match: ['居家暖男型 —— 他的温柔融化你的盔甲','毒舌妖精型 —— 你敢霸道他就敢拆台','傲娇女王型 —— 势均力敌的顶级拉扯']
+  },
+  chaotic: {
+    id: 'chaotic',
+    name: '沙雕欢乐型',
+    icon: '🤪',
+    tagline: '生活就是一场大型真人秀',
+    traits: { pro: ['快乐感染力','脑洞清奇','心态超好','社交牛人'], con: ['不正经','关键时刻掉链子','注意力涣散','过于放飞'] },
+    desc: '你就是行走的表情包，有你在的地方就有笑声。你不按常理出牌，经常做出让人哭笑不得的事情。但你的快乐是真实的，不是强颜欢笑。你的存在提醒所有人：生活已经很累了，开心一点怎么了？',
+    love: '你在感情中是个"喜剧人"，会用搞笑的方式表达深情。你可能在严肃的表白现场突然讲了个冷笑话，但了解你的人都知道，那是你害羞的表现。你需要的是一个能get到你的笑点、也能看懂你认真的人。',
+    match: ['毒舌妖精型 —— 你们在一起就是双口相声','文艺青年型 —— 你带他走出敏感，他给你浪漫','高冷男神型 —— 反差萌的最佳组合']
+  }
+};
+
+const QUESTIONS = [
+  {
+    text: '周五晚上，你更想怎么过？',
+    options: [
+      { label: 'A', text: '约三五好友去最火的酒吧蹦迪', scores: { queen:3, puppy:2, chaotic:2 } },
+      { label: 'B', text: '窝在家里点个外卖追剧打游戏', scores: { prince:3, homey:2, artsy:1 } },
+      { label: 'C', text: '去美术馆看新展 / 参加读书沙龙', scores: { artsy:3, prince:2, sassy:1 } },
+      { label: 'D', text: '组局！把所有人叫来家里做饭轰趴', scores: { homey:3, puppy:2, chaotic:2 } }
+    ]
+  },
+  {
+    text: '暗恋对象发消息说心情不好，你第一反应是？',
+    options: [
+      { label: 'A', text: '立刻打电话过去，陪聊到天亮', scores: { puppy:3, homey:3, chaotic:1 } },
+      { label: 'B', text: '二话不说买好吃的送到他家楼下', scores: { boss:2, homey:2, puppy:2 } },
+      { label: 'C', text: '发一段精心编辑的长文安慰+分享一首应景的歌', scores: { artsy:3, puppy:1, prince:1 } },
+      { label: 'D', text: '开玩笑逗他开心，假装不经意但句句在关心', scores: { sassy:3, chaotic:2, queen:2 } }
+    ]
+  },
+  {
+    text: '选一种你最受不了的行为？',
+    options: [
+      { label: 'A', text: '公共场合大声刷短视频', scores: { prince:3, queen:2, sassy:1 } },
+      { label: 'B', text: '在朋友圈发小作文矫情', scores: { sassy:3, boss:2, prince:1 } },
+      { label: 'C', text: '不回消息却发了朋友圈', scores: { queen:3, boss:2, puppy:1 } },
+      { label: 'D', text: '对服务员/外卖员态度差', scores: { homey:3, puppy:2, chaotic:1 } }
+    ]
+  },
+  {
+    text: '朋友失恋了来找你哭诉，你怎么回应？',
+    options: [
+      { label: 'A', text: '"早说他配不上你！走，带你吃好吃的去"', scores: { queen:3, sassy:2, boss:1 } },
+      { label: 'B', text: '安静地递纸巾，默默陪着喝酒', scores: { homey:3, prince:2, artsy:1 } },
+      { label: 'C', text: '"我懂你的感受……"然后分享自己的经历来共情', scores: { artsy:3, puppy:2, homey:1 } },
+      { label: 'D', text: '"别哭了，我给你表演个我的新绝活"', scores: { chaotic:3, puppy:2, sassy:1 } }
+    ]
+  },
+  {
+    text: '你觉得自己最大的魅力在于？',
+    options: [
+      { label: 'A', text: '不管什么场合都能hold住全场', scores: { queen:3, boss:2, chaotic:1 } },
+      { label: 'B', text: '让人莫名想亲近，像冬天的暖水袋', scores: { puppy:3, homey:3 } },
+      { label: 'C', text: '神秘感，越了解越觉得有东西可挖', scores: { prince:3, artsy:2, sassy:1 } },
+      { label: 'D', text: '有趣，和我在一起永远不会无聊', scores: { chaotic:3, sassy:2, puppy:1 } }
+    ]
+  },
+  {
+    text: '如果被喜欢的人当众表白，你会？',
+    options: [
+      { label: 'A', text: '表面淡定，内心已经在放烟花了', scores: { prince:3, queen:2, boss:1 } },
+      { label: 'B', text: '当场红了眼眶，扑上去抱住对方', scores: { puppy:3, homey:2, artsy:1 } },
+      { label: 'C', text: '先调侃一句"你是不是打赌输了"，然后才答应', scores: { sassy:3, chaotic:2, queen:1 } },
+      { label: 'D', text: '大脑空白，傻笑三秒后才反应过来', scores: { chaotic:3, puppy:2, homey:1 } }
+    ]
+  },
+  {
+    text: '约会迟到两小时，你会是哪个原因？',
+    options: [
+      { label: 'A', text: '搭配了六套衣服都觉得不够完美', scores: { queen:3, artsy:2, sassy:1 } },
+      { label: 'B', text: '出门前突然开始大扫除，停不下来', scores: { homey:3, boss:1, prince:1 } },
+      { label: 'C', text: '在路上看到一个好看的景，拍了半小时', scores: { artsy:3, chaotic:1, puppy:1 } },
+      { label: 'D', text: '在楼下遇到了邻居的狗，玩了半小时', scores: { chaotic:3, puppy:3, homey:1 } }
+    ]
+  },
+  {
+    text: '你最希望在恋爱中得到什么？',
+    options: [
+      { label: 'A', text: '被看见、被理解，不需要解释太多', scores: { prince:3, artsy:3, homey:1 } },
+      { label: 'B', text: '数不清的甜蜜时刻和肢体接触', scores: { puppy:3, chaotic:1, homey:1 } },
+      { label: 'C', text: '并肩作战的伙伴，一起搞事业一起变好', scores: { boss:3, queen:2, sassy:1 } },
+      { label: 'D', text: '自由和空间，恋爱不等于失去自我', scores: { prince:2, sassy:2, chaotic:2 } }
+    ]
+  },
+  {
+    text: '吵架时你的风格是？',
+    options: [
+      { label: 'A', text: '据理力争，逻辑清晰地逐条反驳', scores: { boss:3, sassy:2, prince:1 } },
+      { label: 'B', text: '先道歉再说，受不了冷战的气氛', scores: { puppy:3, homey:3, chaotic:1 } },
+      { label: 'C', text: '冷战到底，等对方先开口', scores: { queen:3, prince:2, artsy:1 } },
+      { label: 'D', text: '吵一半突然笑场，"我们为什么要吵这个啊"', scores: { chaotic:3, puppy:2, sassy:1 } }
+    ]
+  },
+  {
+    text: '回忆一下你手机相册里最多的是什么？',
+    options: [
+      { label: 'A', text: '自己的精修自拍和穿搭记录', scores: { queen:3, sassy:1, puppy:1 } },
+      { label: 'B', text: '风景、天空、猫、咖啡和书的静物照', scores: { artsy:3, prince:2, homey:1 } },
+      { label: 'C', text: '和朋友的合照、聚会截图、搞笑表情包', scores: { chaotic:3, puppy:3, sassy:1 } },
+      { label: 'D', text: '备忘录截图、工作文件、待办事项', scores: { boss:3, homey:2, prince:1 } }
+    ]
+  }
+];
+
+// ==================== STATE ====================
+
+let currentQuestion = 0;
+let scores = {};
+let selectedOption = null;
+
+function resetScores() {
+  scores = {};
+  for (const key of Object.keys(TYPE_DATA)) {
+    scores[key] = 0;
+  }
+}
+
+// ==================== RENDER ====================
+
+function startTest() {
+  currentQuestion = 0;
+  selectedOption = null;
+  resetScores();
+  document.getElementById('welcome').classList.add('hidden');
+  document.getElementById('result-screen').classList.add('hidden');
+  document.getElementById('question-screen').classList.remove('hidden');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[currentQuestion];
+  document.getElementById('question-num').textContent = `第 ${currentQuestion + 1} / ${QUESTIONS.length} 题`;
+  document.getElementById('question-text').textContent = q.text;
+  document.getElementById('progress-fill').style.width = `${((currentQuestion) / QUESTIONS.length) * 100}%`;
+
+  const optsDiv = document.getElementById('options');
+  optsDiv.innerHTML = '';
+  selectedOption = null;
+
+  q.options.forEach((opt, idx) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.setAttribute('tabindex', '0');
+    div.setAttribute('role', 'radio');
+    div.setAttribute('aria-checked', 'false');
+    div.innerHTML = `<span class="letter">${opt.label}</span><span class="text">${opt.text}</span>`;
+    div.addEventListener('click', () => selectOption(idx, div));
+    div.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectOption(idx, div); } });
+    optsDiv.appendChild(div);
+  });
+
+  document.getElementById('btn-next').disabled = true;
+  document.getElementById('btn-next').textContent = currentQuestion === QUESTIONS.length - 1 ? '查看结果' : '下一题';
+
+  // fade in
+  const qs = document.getElementById('question-screen');
+  qs.classList.remove('fade-in');
+  void qs.offsetWidth;
+  qs.classList.add('fade-in');
+}
+
+function selectOption(idx, el) {
+  document.querySelectorAll('.option').forEach(o => { o.classList.remove('selected'); o.setAttribute('aria-checked', 'false'); });
+  el.classList.add('selected');
+  el.setAttribute('aria-checked', 'true');
+  selectedOption = idx;
+  document.getElementById('btn-next').disabled = false;
+}
+
+function nextQuestion() {
+  if (selectedOption === null) return;
+
+  // accumulate scores
+  const opt = QUESTIONS[currentQuestion].options[selectedOption];
+  for (const [type, pts] of Object.entries(opt.scores)) {
+    scores[type] = (scores[type] || 0) + pts;
+  }
+
+  currentQuestion++;
+  if (currentQuestion >= QUESTIONS.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('question-screen').classList.add('hidden');
+
+  // find top type(s), randomly break ties
+  let topScore = -1;
+  const tied = [];
+  for (const [type, pts] of Object.entries(scores)) {
+    if (pts > topScore) { topScore = pts; tied.length = 0; tied.push(type); }
+    else if (pts === topScore) { tied.push(type); }
+  }
+  const topType = tied[Math.floor(Math.random() * tied.length)];
+
+  const data = TYPE_DATA[topType];
+  const resultDiv = document.getElementById('result-screen');
+
+  const pros = data.traits.pro.map(t => `<span class="trait trait-pro">${t}</span>`).join('');
+  const cons = data.traits.con.map(t => `<span class="trait trait-con">${t}</span>`).join('');
+  const matches = data.match.map(m => `<span class="match-tag">${m}</span>`).join('');
+
+  resultDiv.innerHTML = `
+    <div class="type-icon">${data.icon}</div>
+    <div class="type-name">${data.name}</div>
+    <div class="type-tagline">${data.tagline}</div>
+    <div class="result-card">
+      <h3>📖 性格解读</h3>
+      <p>${data.desc}</p>
+    </div>
+    <div class="result-card">
+      <h3>❤️ 恋爱画像</h3>
+      <p>${data.love}</p>
+    </div>
+    <div class="result-card">
+      <h3>✨ 优点</h3>
+      <div class="traits">${pros}</div>
+    </div>
+    <div class="result-card">
+      <h3>⚠️ 小缺点</h3>
+      <div class="traits">${cons}</div>
+    </div>
+    <div class="result-card">
+      <h3>💘 适配类型</h3>
+      <div class="match-list">${matches}</div>
+    </div>
+    <button class="btn btn-restart" onclick="restart()">🔄 重新测试</button>
+  `;
+
+  resultDiv.classList.remove('hidden');
+
+  // fade in
+  resultDiv.classList.remove('fade-in');
+  void resultDiv.offsetWidth;
+  resultDiv.classList.add('fade-in');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restart() {
+  document.getElementById('result-screen').classList.add('hidden');
+  document.getElementById('question-screen').classList.add('hidden');
+  document.getElementById('welcome').classList.remove('hidden');
+  // fade welcome back
+  const w = document.getElementById('welcome');
+  w.classList.remove('fade-in');
+  void w.offsetWidth;
+  w.classList.add('fade-in');
+}
+</script>
+</body>
+</html>
