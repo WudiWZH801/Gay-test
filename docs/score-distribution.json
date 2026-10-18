@@ -1,0 +1,186 @@
+{
+  "quizVersion": 2,
+  "combinations": 1048576,
+  "tiedCombinations": 246144,
+  "tieRate": 0.2347412109375,
+  "maxMinRatio": 1.0243404286093016,
+  "types": [
+    {
+      "id": "queen",
+      "name": "闪耀主角型",
+      "maximumScore": 15,
+      "expectedShare": 0.12580283709930254,
+      "soleWins": 101532,
+      "exampleAnswers": {
+        "gathering": "entrance",
+        "comfort": "practical",
+        "weekend": "wander",
+        "friend": "space",
+        "surprise": "sunset",
+        "affection": "tell",
+        "disagreement": "lighten",
+        "space": "occasion",
+        "teamwork": "details",
+        "gift": "wish"
+      }
+    },
+    {
+      "id": "puppy",
+      "name": "阳光直球型",
+      "maximumScore": 15,
+      "expectedShare": 0.12529009864440555,
+      "soleWins": 100681,
+      "exampleAnswers": {
+        "gathering": "entrance",
+        "comfort": "practical",
+        "weekend": "wander",
+        "friend": "space",
+        "surprise": "sunset",
+        "affection": "tell",
+        "disagreement": "lighten",
+        "space": "occasion",
+        "teamwork": "connect",
+        "gift": "wish"
+      }
+    },
+    {
+      "id": "prince",
+      "name": "慢热观察型",
+      "maximumScore": 15,
+      "expectedShare": 0.12376808211913957,
+      "soleWins": 98558,
+      "exampleAnswers": {
+        "gathering": "entrance",
+        "comfort": "practical",
+        "weekend": "wander",
+        "friend": "space",
+        "surprise": "sunset",
+        "affection": "tell",
+        "disagreement": "pause",
+        "space": "occasion",
+        "teamwork": "details",
+        "gift": "useful"
+      }
+    },
+    {
+      "id": "artsy",
+      "name": "浪漫共鸣型",
+      "maximumScore": 15,
+      "expectedShare": 0.12491418293542292,
+      "soleWins": 100256,
+      "exampleAnswers": {
+        "gathering": "entrance",
+        "comfort": "practical",
+        "weekend": "wander",
+        "friend": "space",
+        "surprise": "sunset",
+        "affection": "tell",
+        "disagreement": "lighten",
+        "space": "occasion",
+        "teamwork": "connect",
+        "gift": "story"
+      }
+    },
+    {
+      "id": "sassy",
+      "name": "机智吐槽型",
+      "maximumScore": 15,
+      "expectedShare": 0.12526606378098523,
+      "soleWins": 100631,
+      "exampleAnswers": {
+        "gathering": "entrance",
+        "comfort": "practical",
+        "weekend": "wander",
+        "friend": "space",
+        "surprise": "sunset",
+        "affection": "tease",
+        "disagreement": "lighten",
+        "space": "occasion",
+        "teamwork": "details",
+        "gift": "inside"
+      }
+    },
+    {
+      "id": "homey",
+      "name": "安心陪伴型",
+      "maximumScore": 15,
+      "expectedShare": 0.12333450090313572,
+      "soleWins": 98028,
+      "exampleAnswers": {
+        "gathering": "entrance",
+        "comfort": "practical",
+        "weekend": "wander",
+        "friend": "space",
+        "surprise": "sunset",
+        "affection": "tell",
+        "disagreement": "lighten",
+        "space": "routine",
+        "teamwork": "details",
+        "gift": "wish"
+      }
+    },
+    {
+      "id": "boss",
+      "name": "果断领航型",
+      "maximumScore": 15,
+      "expectedShare": 0.12633651551743233,
+      "soleWins": 102097,
+      "exampleAnswers": {
+        "gathering": "entrance",
+        "comfort": "practical",
+        "weekend": "wander",
+        "friend": "space",
+        "surprise": "sunset",
+        "affection": "tell",
+        "disagreement": "clarify",
+        "space": "occasion",
+        "teamwork": "improvise",
+        "gift": "wish"
+      }
+    },
+    {
+      "id": "chaotic",
+      "name": "随性搞怪型",
+      "maximumScore": 15,
+      "expectedShare": 0.12528771899991573,
+      "soleWins": 100649,
+      "exampleAnswers": {
+        "gathering": "entrance",
+        "comfort": "practical",
+        "weekend": "wander",
+        "friend": "space",
+        "surprise": "sunset",
+        "affection": "tell",
+        "disagreement": "lighten",
+        "space": "occasion",
+        "teamwork": "improvise",
+        "gift": "wish"
+      }
+    }
+  ],
+  "tiedExample": {
+    "gathering": "entrance",
+    "comfort": "practical",
+    "weekend": "wander",
+    "friend": "space",
+    "surprise": "sunset",
+    "affection": "tell",
+    "disagreement": "lighten",
+    "space": "occasion",
+    "teamwork": "details",
+    "gift": "story"
+  },
+  "maxTiedTypes": 7,
+  "mostTiedAnswers": {
+    "gathering": "entrance",
+    "comfort": "practical",
+    "weekend": "wander",
+    "friend": "space",
+    "surprise": "occasion",
+    "affection": "tease",
+    "disagreement": "pause",
+    "space": "routine",
+    "teamwork": "connect",
+    "gift": "wish"
+  }
+}
