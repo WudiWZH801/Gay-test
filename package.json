@@ -1,0 +1,28 @@
+{
+  "name": "gay-test",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A playful, local-only personality archetype quiz.",
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "analyze": "node --experimental-strip-types scripts/analyze-distribution.ts",
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "check": "npm run typecheck && npm test && npm run analyze && npm run build"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "26.6.5",
+    "typescript": "7.0.2",
+    "vite": "8.3.4",
+    "vitest": "5.0.5"
+  }
+}
